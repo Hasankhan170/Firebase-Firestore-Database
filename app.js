@@ -1,4 +1,4 @@
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+import { collection, addDoc ,getDocs } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 import { db } from "./config.js"
 
 
@@ -7,6 +7,26 @@ const input = document.querySelector('.input')
 const ul = document.querySelector('ul')
 
 let arr = []
+
+async function geteData(){
+   const querySnapshot = await getDocs(collection(db, "users"));
+   querySnapshot.forEach((doc) => {
+   console.log(doc.data());
+   arr.push(doc.data())
+});
+
+}
+geteData()
+
+function rendersTodos(){
+  ul.innerHTML = ""
+
+  arr.map((item)=>{
+    ul.innerHTML += `<li>${item.todo}</li>`
+  })
+console.log(arr);
+
+}
 
 form.addEventListener('submit' , async (e)=>{
     e.preventDefault()
@@ -30,12 +50,3 @@ form.addEventListener('submit' , async (e)=>{
 })
 
 
-function rendersTodos(){
-  ul.innerHTML = ""
-
-  arr.map((item)=>{
-    ul.innerHTML += `<li>${item.todo}</li>`
-  })
-console.log(arr);
-
-}
