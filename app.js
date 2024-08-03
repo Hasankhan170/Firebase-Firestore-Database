@@ -11,6 +11,7 @@ const citiesBtn = document.querySelectorAll('.cities-btn')
 const reset = document.querySelector(".reset");
 
 
+
 let arr = []
 
 citiesBtn.forEach((btn)=>{
@@ -24,7 +25,7 @@ citiesBtn.forEach((btn)=>{
     querySnapshot.forEach((doc) => {
       arr.push({ ...doc.data(), id: doc.id });
     });
-    // console.log(arr);
+
     
     rendersTodos()
   })
@@ -33,6 +34,7 @@ citiesBtn.forEach((btn)=>{
 reset.addEventListener('click' , getData)
 
 async function getData(){
+  
   arr = []
   const q = query(collection(db, "users"), orderBy("time", "desc"));
   const querySnapshot = await getDocs(q);
@@ -50,9 +52,12 @@ rendersTodos()
 }
 getData()
 
+
 function rendersTodos(){
   ul.innerHTML = ""
 
+
+  
   arr.map((item)=>{
     ul.innerHTML += `<li>${item.todo}</li>
     <button class = "deleteBtn">Delete</button>
@@ -92,6 +97,8 @@ function rendersTodos(){
 
 form.addEventListener('submit' , async (e)=>{
     e.preventDefault()
+
+  
     try {
         const docRef = await addDoc(collection(db, "users"), {
           todo : input.value,
@@ -112,5 +119,4 @@ form.addEventListener('submit' , async (e)=>{
       }
       
 })
-
 
